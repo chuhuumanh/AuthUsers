@@ -45,8 +45,9 @@ module.exports.onLogin=(req,res)=>{
       .then(isMatch=>{
         if(isMatch){
          const payload = {
-           email : req.body.email,
-           name : req.body.name
+           id : user.id,
+           email : user.email,
+           name : user.name
          }
          jwt.sign(payload,keys.secretOrKey,{expiresIn:3600},(err,token)=>{
            
