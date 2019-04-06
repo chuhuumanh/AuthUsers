@@ -1,6 +1,8 @@
 const bcrypt = require('bcrypt');
 const validation = require('../validator/register.validation')
 const User = require('../models/User.model')
+const keys = require('../config/keys')
+const jwt = require('jsonwebtoken')
 module.exports.onRegister = (req,res)=>{
  console.log(req.body)
    const error = validation.checkValidate(req);
@@ -42,7 +44,19 @@ module.exports.onLogin=(req,res)=>{
       bcrypt.compare(req.body.password,user.password)
       .then(isMatch=>{
         if(isMatch){
-          res.json({Success : "Login thành công"})
+         const payload = {
+           email : req.body.email,
+           name : req.body.name
+         }
+         jwt.sign(payload,keys.secretOrKey,{expiresIn:3600},(err,token)=>{
+           
+        res.json({
+          success:true,
+          token : "Bearer "+token
+        })
+
+
+         })
         }
         else {
           return res.status(404).json({Error : "Mật khẩu sai"})
