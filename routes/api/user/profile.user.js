@@ -32,4 +32,15 @@ router.post('/',passport.authenticate('jwt',{session:false}),(req,res)=>{
     })
 })
 
+router.get('/handle/:handle',(req,res)=>{
+  Profile.findOne({handle:req.params.handle})
+  .populate('user', ['name'])
+  .then(profile=>{
+   if(!profile){
+     return res.status(404).json({error:"LOoix mie no roi ba con a"})
+   }else {
+     res.json(profile)
+   }
+  })
+})
 module.exports = router
