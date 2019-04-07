@@ -20,7 +20,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use('/api/user',register)
 app.use('/api/user',login)
-app.use('/api/profile',Profile)
+app.use('/api/profile',passport.authenticate('jwt',{session:false}),Profile)
 
 
 
