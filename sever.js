@@ -12,6 +12,7 @@ mongoose.connect(db.mongoURI, {useNewUrlParser: true})
 })
 const register = require('./routes/api/user/register.user.js')
 const login = require('./routes/api/user/login.user.js')
+const Profile = require('./routes/api/user/profile.user.js')
 // use passport
 app.use(passport.initialize())
 require('./config/passport')(passport)
@@ -19,6 +20,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use('/api/user',register)
 app.use('/api/user',login)
+app.use('/api/profile',Profile)
 
 
 
